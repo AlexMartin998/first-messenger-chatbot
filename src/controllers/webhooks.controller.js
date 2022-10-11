@@ -151,3 +151,64 @@ const callSendAPI = (sender_psid, response) => {
     }
   );
 };
+
+export const handleSetupInfor = async (req, res) => {
+  // call the facebook api
+  // Send the HTTP request to the Messenger Platform
+  const request_body = {
+    get_started: { payload: '<postback_payload>' },
+    persistent_menu: [
+      {
+        locale: 'default',
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: 'web_url',
+            title: 'Repo',
+            url: 'https://github.com/AlexMartin998/first-messenger-chatbot',
+            webview_height_ratio: 'full',
+          },
+          {
+            type: 'web_url',
+            title: 'GitHub',
+            url: 'https://github.com/AlexMartin998',
+            webview_height_ratio: 'full',
+          },
+        ],
+      },
+    ],
+  };
+
+  return new Promise((resolve, reject) => {
+    try {
+      request(
+        {
+          uri: 'https://graph.facebook.com/v15.0/me/messenger_profile',
+          qs: { access_token: PAGE_ACCESS_TOKEN },
+          method: 'POST',
+          json: request_body,
+        },
+        (err, response, body) => {
+          console.log('--------------------------------------------');
+          console.log(
+            'Logs setup persistent menu & get started button: ',
+            response
+          );
+          console.log('--------------------------------------------');
+          if (!err) {
+            return res.send('Setup done!');
+          } else {
+            console.error('Unable to send message:' + err);
+
+            return res.send(
+              'Something went wrong with setup, please check logs...'
+            );
+          }
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
