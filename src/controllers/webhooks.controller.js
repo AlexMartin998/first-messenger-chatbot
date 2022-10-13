@@ -119,6 +119,12 @@ const handlePostback = (sender_psid, received_postback) => {
     response = { text: 'Thanks!' };
   } else if (payload === 'no') {
     response = { text: 'Oops, try sending another image.' };
+
+    // Lo q se envia al hacer clic en get started
+  } else if (payload == '<postback_payload>') {
+    response = {
+      text: 'Hi there, welcome to Donut Express new chatbot...',
+    };
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
@@ -181,6 +187,7 @@ export const handleSetupInfor = async (req, res) => {
 
   return new Promise((resolve, reject) => {
     try {
+      // TODO: Usar Axios
       request(
         {
           uri: 'https://graph.facebook.com/v15.0/me/messenger_profile',
