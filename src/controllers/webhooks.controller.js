@@ -149,11 +149,11 @@ const callSendAPI = (sender_psid, response) => {
     },
     (err, res, body) => {
       console.log(
-        '=======================================++ Check Error send message 11111111111111111 ======================================= '
+        '======================================= Check Error send message 11111111111111111 ======================================= '
       );
       console.log(res);
       console.log(
-        '=======================================++ Check Error send message 2222222222222222 ======================================= '
+        '======================================= Check Error send message 2222222222222222 ======================================= '
       );
       if (!err) {
         console.log('message sent!');
@@ -186,6 +186,11 @@ export const handleSetupInfor = async (req, res) => {
             title: 'GitHub',
             url: 'https://github.com/AlexMartin998',
             webview_height_ratio: 'full',
+          },
+          {
+            type: 'postback',
+            title: 'Restart the conversation',
+            payload: 'RESTART_CONVERSATION',
           },
         ],
       },

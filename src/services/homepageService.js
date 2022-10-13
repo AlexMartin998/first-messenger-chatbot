@@ -10,7 +10,7 @@ export const handleGetStartedButton = () => {
           {
             title: 'Welcome to the Donut Express new chatbot!',
             image_url:
-              'https://www.conferencecall.co.uk/blog/wp-content/uploads/2015/03/manly-job.jpg',
+              'https://res.cloudinary.com/keystone-demo/image/upload/v1565391007/zgfyq7a2i9mtuyglrqou.jpg',
             subtitle: '(saving data to google sheet)',
             default_action: {
               type: 'web_url',
