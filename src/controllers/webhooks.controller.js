@@ -1,6 +1,7 @@
 import request from 'request';
 
 import { PAGE_ACCESS_TOKEN, VERIFY_TOKEN } from '../config/index.js';
+import { handleGetStartedButton } from '../services/index.js';
 
 export const getWebhook = (req, res) => {
   // Your verify token. Should be a random string.
@@ -120,11 +121,9 @@ const handlePostback = (sender_psid, received_postback) => {
   } else if (payload === 'no') {
     response = { text: 'Oops, try sending another image.' };
 
-    // Lo q se envia al hacer clic en get started
+    // Lo q se envia al hacer clic en get started: Envia la generic template
   } else if (payload == '<postback_payload>') {
-    response = {
-      text: 'Hi there, welcome to Donut Express new chatbot...',
-    };
+    response = handleGetStartedButton();
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
@@ -149,6 +148,13 @@ const callSendAPI = (sender_psid, response) => {
       json: request_body,
     },
     (err, res, body) => {
+      console.log(
+        '======================================= Check Error send message 11111111111111111 ======================================= '
+      );
+      console.log(res);
+      console.log(
+        '======================================= Check Error send message 2222222222222222 ======================================= '
+      );
       if (!err) {
         console.log('message sent!');
       } else {
@@ -161,6 +167,7 @@ const callSendAPI = (sender_psid, response) => {
 export const handleSetupInfor = async (req, res) => {
   // call the facebook api
   // Send the HTTP request to the Messenger Platform
+  // // Persistent menu
   const request_body = {
     get_started: { payload: '<postback_payload>' },
     persistent_menu: [
@@ -183,6 +190,7 @@ export const handleSetupInfor = async (req, res) => {
         ],
       },
     ],
+    whitelisted_domains: ['https://messenger-chatbot-alx-t1.herokuapp.com'], // your heroku app
   };
 
   return new Promise((resolve, reject) => {
@@ -218,4 +226,9 @@ export const handleSetupInfor = async (req, res) => {
       reject(error);
     }
   });
+};
+
+// // // EJS - Survey: Enviar una web al Messenger
+export const handleGetSurveyPage = (req, res) => {
+  return res.render('survey.ejs');
 };
