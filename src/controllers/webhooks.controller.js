@@ -190,7 +190,10 @@ export const handleSetupInfor = async (req, res) => {
         ],
       },
     ],
-    whitelisted_domains: ['https://messenger-chatbot-alx-t1.herokuapp.com'], // your heroku app
+    whitelisted_domains: [
+      'https://messenger-chatbot-alx-t1.herokuapp.com',
+      'https://first-messenger-chatbot.onrender.com',
+    ], // your heroku app
   };
 
   return new Promise((resolve, reject) => {
